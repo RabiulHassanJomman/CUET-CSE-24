@@ -1678,7 +1678,13 @@ async function loadEventsFromFirebase() {
         await deleteExpiredItems();
         
         const snapshot = await db.collection('events').orderBy('date', 'asc').get();
-        eventsArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        eventsArray = snapshot.docs.map(doc => {
+            const data = doc.data();
+            const normalizedDetails = Array.isArray(data.details)
+                ? data.details
+                : (data.details ? [data.details] : []);
+            return { id: doc.id, ...data, details: normalizedDetails };
+        });
         __writeCache('eventsCache', eventsArray);
     } catch (err) {
         console.error('Error loading events:', err);
@@ -1710,7 +1716,11 @@ function populateEventsModal() {
             <div class="event-date">📅 ${event.date} ${event.time ? `⏰ ${event.time}` : ''}</div>
             <div class="event-description">${event.description}</div>
             <div class="event-details">
-                ${event.details.map(detail => `<span class="event-detail">${detail}</span>`).join('')}
+                ${(
+                    Array.isArray(event.details)
+                        ? event.details
+                        : (event.details ? [event.details] : [])
+                ).map(detail => `<span class="event-detail">${detail}</span>`).join('')}
             </div>
         `;
         
