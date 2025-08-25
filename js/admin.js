@@ -23,7 +23,7 @@
   }
 
   // Credentials: allow override via window.__adminCredentials = { username, password }
-  var defaultCreds = { username: 'admin', password: 'cuetcse24' };
+  var defaultCreds = { username: 'admin', password: 'cse24admin' };
   var adminCreds = (window.__adminCredentials && typeof window.__adminCredentials.username === 'string')
     ? window.__adminCredentials
     : defaultCreds;
