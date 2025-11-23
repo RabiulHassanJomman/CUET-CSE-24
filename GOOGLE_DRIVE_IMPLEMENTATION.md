@@ -85,7 +85,7 @@ To enable the file manager, you need to:
 3. **Make your Drive folder publicly accessible**
 4. **Update the API key** in `js/index.js`:
    ```javascript
-   const DRIVE_API_KEY = "YOUR_ACTUAL_API_KEY_HERE";
+   const DRIVE_API_KEY = "AIzaSyDecWKyktxeOwWL2W6b89LrZ6mIL-uUJow";
    ```
 
 **Detailed instructions**: See `GOOGLE_DRIVE_SETUP.md`
