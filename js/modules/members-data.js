@@ -10,6 +10,7 @@ export const membersArray = [
     school: "Feni Girls' Cadet College",
     bio: null,
     nickname: "Anika",
+    blood_group: null,
     fb_profile_link: "https://www.facebook.com/share/19fXmd7n5o/",
   },
   {

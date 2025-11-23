@@ -56,16 +56,14 @@ export function createMemberCard(member) {
   card.className = "member-card";
   card.setAttribute("data-id", member.id);
 
-  const displayName = member.nickname || member.name || "Unknown";
+  const fullName = member.nickname || member.name || "Unknown";
+  const firstName = fullName.split(" ")[0];
+  const bloodGroup = member.blood_group || "N/A";
 
   card.innerHTML = `
-    <div class="member-avatar">
-      <span>${displayName.charAt(0).toUpperCase()}</span>
-    </div>
-    <div class="member-info">
-      <h3>${displayName}</h3>
-      <p>ID: ${member.id}</p>
-    </div>
+    <h3>${firstName}</h3>
+    <p>ID: ${member.id}</p>
+    <p>Blood: ${bloodGroup}</p>
   `;
 
   card.addEventListener("click", () => showMemberModal(member));
