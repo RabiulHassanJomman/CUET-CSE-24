@@ -2,7 +2,7 @@
 
 // Configuration
 const DRIVE_FOLDER_ID = "1yicK2IwOWPZmSLExYV4wSDW4OQIe4Ein";
-const API_KEY = "YOUR_GOOGLE_API_KEY"; // You'll need to add your API key
+const API_KEY = "AIzaSyDecWKyktxeOwWL2W6b89LrZ6mIL-uUJow"; // Google Drive API key
 
 // State management
 let currentFolderId = DRIVE_FOLDER_ID;
