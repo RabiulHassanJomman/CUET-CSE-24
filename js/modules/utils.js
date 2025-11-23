@@ -1,5 +1,11 @@
 // ===== Utils Module =====
 
+import { closeRoutinesModal } from "./course-resources.js";
+import { closeEventsModal } from "./events.js";
+import { closeMemberModal } from "./members.js";
+import { closeNoticeModal } from "./notices.js";
+import { closeRoutineModal } from "./routine.js";
+
 // Global state management
 export let activeModal = null;
 
