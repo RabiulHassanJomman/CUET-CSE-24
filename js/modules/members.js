@@ -2,17 +2,7 @@
 // Handles member data management, card creation, and display logic
 
 import { membersArray, studentsList } from "./members-data.js";
-
-// Import utils for modal management
-let activeModal = null;
-let preventMainPageScroll, restoreMainPageScroll;
-
-// Initialize utils references (will be set by initMembersModule)
-export function initMembersModule(utils) {
-  activeModal = utils.activeModal;
-  preventMainPageScroll = utils.preventMainPageScroll;
-  restoreMainPageScroll = utils.restoreMainPageScroll;
-}
+import { preventMainPageScroll, restoreMainPageScroll } from "./utils.js";
 
 // Facebook URL normalization
 export function normalizeFacebookUrl(rawUrl) {
@@ -124,9 +114,7 @@ export function showMemberModal(member) {
   modal.style.display = "flex";
   setTimeout(() => modal.classList.add("show"), 10);
 
-  if (preventMainPageScroll) {
-    preventMainPageScroll();
-  }
+  preventMainPageScroll();
 }
 
 // Close member modal
@@ -139,9 +127,7 @@ export function closeMemberModal() {
     }, 300);
   }
 
-  if (restoreMainPageScroll) {
-    restoreMainPageScroll();
-  }
+  restoreMainPageScroll();
 }
 
 // Search functionality

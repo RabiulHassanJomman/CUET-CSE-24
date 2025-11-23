@@ -14,7 +14,6 @@ import {
   closeMemberModal,
   createMemberCard,
   ensureAllMembersFromStudents,
-  initMembersModule,
   setupMemberSearch,
   showMemberModal,
 } from "./modules/members.js";
@@ -129,10 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("🚀 CUET CSE 24 - Application Starting...");
 
   // Initialize utilities
-  const utils = initializeUtils();
-
-  // Initialize members module with utils
-  initMembersModule(utils);
+  initializeUtils();
 
   // Initialize text reveal animation
   initTextRevealAnimation();

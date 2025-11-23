@@ -1,5 +1,12 @@
 // ===== Notices Module =====
 
+import {
+  getActiveModal,
+  preventMainPageScroll,
+  restoreMainPageScroll,
+  setActiveModal,
+} from "./utils.js";
+
 // Get Firestore instance from window (initialized by Firebase SDK)
 const getDb = () => window.db;
 
@@ -142,11 +149,11 @@ export function openNoticeModal() {
   modal.style.display = "flex";
   setTimeout(() => modal.classList.add("show"), 10);
 
-  if (activeModal === null && window.history && window.history.pushState) {
+  if (getActiveModal() === null && window.history && window.history.pushState) {
     window.history.pushState({ modal: "notice" }, "");
-    activeModal = "notice";
+    setActiveModal("notice");
   } else {
-    activeModal = "notice";
+    setActiveModal("notice");
   }
   preventMainPageScroll();
 
@@ -169,7 +176,7 @@ export function actuallyCloseNoticeModal() {
   modal.classList.remove("show");
   setTimeout(() => (modal.style.display = "none"), 300);
   restoreMainPageScroll();
-  if (activeModal === "notice") activeModal = null;
+  if (getActiveModal() === "notice") setActiveModal(null);
 }
 
 export function closeNoticeModal() {

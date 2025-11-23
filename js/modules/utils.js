@@ -7,7 +7,15 @@ import { closeNoticeModal } from "./notices.js";
 import { closeRoutineModal } from "./routine.js";
 
 // Global state management
-export let activeModal = null;
+let activeModal = null;
+
+export function getActiveModal() {
+  return activeModal;
+}
+
+export function setActiveModal(value) {
+  activeModal = value;
+}
 
 // Prevent main page scroll when modal is open
 export function preventMainPageScroll() {
@@ -78,23 +86,23 @@ export async function deleteExpiredItems() {
 // History API management for modals
 export function setupHistoryAPI() {
   window.addEventListener("popstate", () => {
-    if (activeModal === "member") {
+    if (getActiveModal() === "member") {
       actuallyCloseMemberModal();
       return;
     }
-    if (activeModal === "events") {
+    if (getActiveModal() === "events") {
       actuallyCloseEventsModal();
       return;
     }
-    if (activeModal === "routines") {
+    if (getActiveModal() === "routines") {
       actuallyCloseRoutinesModal();
       return;
     }
-    if (activeModal === "notice") {
+    if (getActiveModal() === "notice") {
       actuallyCloseNoticeModal();
       return;
     }
-    if (activeModal === "routine") {
+    if (getActiveModal() === "routine") {
       actuallyCloseRoutineModal();
       return;
     }
@@ -106,35 +114,35 @@ export function setupEscapeKeyHandler() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (
-        activeModal === "member" &&
+        getActiveModal() === "member" &&
         window.history &&
         window.history.state?.modal === "member"
       ) {
         window.history.back();
       }
       if (
-        activeModal === "events" &&
+        getActiveModal() === "events" &&
         window.history &&
         window.history.state?.modal === "events"
       ) {
         window.history.back();
       }
       if (
-        activeModal === "routines" &&
+        getActiveModal() === "routines" &&
         window.history &&
         window.history.state?.modal === "routines"
       ) {
         window.history.back();
       }
       if (
-        activeModal === "notice" &&
+        getActiveModal() === "notice" &&
         window.history &&
         window.history.state?.modal === "notice"
       ) {
         window.history.back();
       }
       if (
-        activeModal === "routine" &&
+        getActiveModal() === "routine" &&
         window.history &&
         window.history.state?.modal === "routine"
       ) {
@@ -234,11 +242,4 @@ export function initializeUtils() {
   setupEscapeKeyHandler();
   setupSearchFunctionality();
   setupModalCloseHandlers();
-
-  // Return utility functions for other modules
-  return {
-    activeModal,
-    preventMainPageScroll,
-    restoreMainPageScroll,
-  };
 }

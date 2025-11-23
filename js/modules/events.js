@@ -1,5 +1,12 @@
 // ===== Events Module =====
 
+import {
+  getActiveModal,
+  preventMainPageScroll,
+  restoreMainPageScroll,
+  setActiveModal,
+} from "./utils.js";
+
 // Get Firestore instance from window (initialized by Firebase SDK)
 const getDb = () => window.db;
 
@@ -72,11 +79,11 @@ export function openEventsModal() {
   modal.style.display = "flex";
   setTimeout(() => modal.classList.add("show"), 10);
 
-  if (activeModal === null && window.history && window.history.pushState) {
+  if (getActiveModal() === null && window.history && window.history.pushState) {
     window.history.pushState({ modal: "events" }, "");
-    activeModal = "events";
+    setActiveModal("events");
   } else {
-    activeModal = "events";
+    setActiveModal("events");
   }
   preventMainPageScroll();
 
@@ -92,7 +99,7 @@ export function actuallyCloseEventsModal() {
   modal.classList.remove("show");
   setTimeout(() => (modal.style.display = "none"), 300);
   restoreMainPageScroll();
-  if (activeModal === "events") activeModal = null;
+  if (getActiveModal() === "events") setActiveModal(null);
 }
 
 export function closeEventsModal() {

@@ -1,5 +1,12 @@
 // ===== Routine Module =====
 
+import {
+  getActiveModal,
+  preventMainPageScroll,
+  restoreMainPageScroll,
+  setActiveModal,
+} from "./utils.js";
+
 // Get Firestore instance from window (initialized by Firebase SDK)
 const getDb = () => window.db;
 
@@ -225,11 +232,11 @@ export function openRoutineModal() {
   modal.style.display = "flex";
   setTimeout(() => modal.classList.add("show"), 10);
 
-  if (activeModal === null && window.history && window.history.pushState) {
+  if (getActiveModal() === null && window.history && window.history.pushState) {
     window.history.pushState({ modal: "routine" }, "");
-    activeModal = "routine";
+    setActiveModal("routine");
   } else {
-    activeModal = "routine";
+    setActiveModal("routine");
   }
   preventMainPageScroll();
 
@@ -267,7 +274,7 @@ export function actuallyCloseRoutineModal() {
   modal.classList.remove("show");
   setTimeout(() => (modal.style.display = "none"), 300);
   restoreMainPageScroll();
-  if (activeModal === "routine") activeModal = null;
+  if (getActiveModal() === "routine") setActiveModal(null);
   currentActiveSubsection = "A1";
 }
 
