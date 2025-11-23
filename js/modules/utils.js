@@ -1,10 +1,13 @@
 // ===== Utils Module =====
 
-import { closeRoutinesModal } from "./course-resources.js";
-import { closeEventsModal } from "./events.js";
+import {
+  actuallyCloseRoutinesModal,
+  closeRoutinesModal,
+} from "./course-resources.js";
+import { actuallyCloseEventsModal, closeEventsModal } from "./events.js";
 import { closeMemberModal } from "./members.js";
-import { closeNoticeModal } from "./notices.js";
-import { closeRoutineModal } from "./routine.js";
+import { actuallyCloseNoticeModal, closeNoticeModal } from "./notices.js";
+import { actuallyCloseRoutineModal, closeRoutineModal } from "./routine.js";
 
 // Global state management
 let activeModal = null;
@@ -87,7 +90,7 @@ export async function deleteExpiredItems() {
 export function setupHistoryAPI() {
   window.addEventListener("popstate", () => {
     if (getActiveModal() === "member") {
-      actuallyCloseMemberModal();
+      closeMemberModal();
       return;
     }
     if (getActiveModal() === "events") {
