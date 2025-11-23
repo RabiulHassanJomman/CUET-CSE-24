@@ -7,7 +7,14 @@
   height: 100%;
   z-index: -1;
   overflow: hidden;
-  background: linear-gradient(135deg, #0a001e 0%, #1a0033 25%, #0a001e 50%, #1a0033 75%, #0a001e 100%);
+  background: linear-gradient(
+    135deg,
+    #0a001e 0%,
+    #1a0033 25%,
+    #0a001e 50%,
+    #1a0033 75%,
+    #0a001e 100%
+  );
 }
 
 .geometric-shape {
@@ -31,7 +38,16 @@
   width: 120px;
   height: 120px;
   background: linear-gradient(45deg, #fa1588, #cc0066);
-  clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+  clip-path: polygon(
+    20% 0%,
+    80% 0%,
+    100% 20%,
+    100% 80%,
+    80% 100%,
+    20% 100%,
+    0% 80%,
+    0% 20%
+  );
   top: 20%;
   right: 15%;
   animation-delay: 1s;
@@ -71,7 +87,15 @@
   width: 90px;
   height: 90px;
   background: linear-gradient(45deg, #ffeb3b, #fbc02d);
-  clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
+  clip-path: polygon(
+    0% 20%,
+    60% 20%,
+    60% 0%,
+    100% 50%,
+    60% 100%,
+    60% 80%,
+    0% 80%
+  );
   top: 15%;
   left: 50%;
   animation-delay: 5s;
@@ -81,7 +105,16 @@
   width: 50px;
   height: 50px;
   background: linear-gradient(45deg, #4caf50, #388e3c);
-  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  clip-path: polygon(
+    30% 0%,
+    70% 0%,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0% 70%,
+    0% 30%
+  );
   bottom: 10%;
   left: 50%;
   animation-delay: 6s;
@@ -153,38 +186,97 @@
 .particle {
   position: absolute;
   color: #00d4ff;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 12px;
   opacity: 0.6;
   animation: binaryFloat 10s linear infinite;
 }
 
-.particle:nth-child(1) { top: 15%; left: 25%; animation-delay: 0s; }
-.particle:nth-child(2) { top: 25%; right: 20%; animation-delay: 1s; }
-.particle:nth-child(3) { top: 35%; left: 15%; animation-delay: 2s; }
-.particle:nth-child(4) { top: 45%; right: 30%; animation-delay: 3s; }
-.particle:nth-child(5) { top: 55%; left: 35%; animation-delay: 4s; }
-.particle:nth-child(6) { top: 65%; right: 15%; animation-delay: 5s; }
-.particle:nth-child(7) { top: 75%; left: 45%; animation-delay: 6s; }
-.particle:nth-child(8) { top: 85%; right: 25%; animation-delay: 7s; }
+.particle:nth-child(1) {
+  top: 15%;
+  left: 25%;
+  animation-delay: 0s;
+}
+.particle:nth-child(2) {
+  top: 25%;
+  right: 20%;
+  animation-delay: 1s;
+}
+.particle:nth-child(3) {
+  top: 35%;
+  left: 15%;
+  animation-delay: 2s;
+}
+.particle:nth-child(4) {
+  top: 45%;
+  right: 30%;
+  animation-delay: 3s;
+}
+.particle:nth-child(5) {
+  top: 55%;
+  left: 35%;
+  animation-delay: 4s;
+}
+.particle:nth-child(6) {
+  top: 65%;
+  right: 15%;
+  animation-delay: 5s;
+}
+.particle:nth-child(7) {
+  top: 75%;
+  left: 45%;
+  animation-delay: 6s;
+}
+.particle:nth-child(8) {
+  top: 85%;
+  right: 25%;
+  animation-delay: 7s;
+}
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-20px) rotate(90deg); }
-  50% { transform: translateY(-10px) rotate(180deg); }
-  75% { transform: translateY(-30px) rotate(270deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+  }
 }
 
 @keyframes circuitFlow {
-  0% { opacity: 0.1; transform: scaleY(0); }
-  50% { opacity: 0.6; transform: scaleY(1); }
-  100% { opacity: 0.1; transform: scaleY(0); }
+  0% {
+    opacity: 0.1;
+    transform: scaleY(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0.1;
+    transform: scaleY(0);
+  }
 }
 
 @keyframes binaryFloat {
-  0% { opacity: 0.1; transform: translateY(0px) scale(0.8); }
-  50% { opacity: 0.8; transform: translateY(-30px) scale(1.2); }
-  100% { opacity: 0.1; transform: translateY(-60px) scale(0.8); }
+  0% {
+    opacity: 0.1;
+    transform: translateY(0px) scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-30px) scale(1.2);
+  }
+  100% {
+    opacity: 0.1;
+    transform: translateY(-60px) scale(0.8);
+  }
 }
 
 /* Respect reduced motion preferences to save CPU/GPU */
@@ -342,43 +434,43 @@
   .geometric-shape {
     transform: scale(0.7);
   }
-  
+
   .circuit-line {
     opacity: 0.2;
   }
-  
+
   .particle {
     font-size: 10px;
   }
-  
+
   .search-section {
     max-width: 100%;
     padding: 0 15px;
   }
-  
+
   .search-box {
     flex-direction: column;
     gap: 10px;
     align-items: stretch;
   }
-  
+
   #searchInput {
     min-width: auto;
     width: 100%;
     font-size: 14px;
     padding: 10px 15px;
   }
-  
+
   .filter-select {
     width: 100%;
     text-align: center;
   }
-  
+
   .clear-btn {
     width: 100%;
     padding: 12px 15px;
   }
-  
+
   .results-container {
     grid-template-columns: 1fr;
   }
@@ -388,33 +480,33 @@
   .geometric-shape {
     transform: scale(0.5);
   }
-  
+
   .circuit-line {
     opacity: 0.15;
   }
-  
+
   .search-section {
     padding: 0 10px;
   }
-  
+
   .search-box {
     flex-direction: column;
     gap: 8px;
     align-items: stretch;
   }
-  
+
   #searchInput {
     min-width: auto;
     width: 100%;
     font-size: 13px;
     padding: 8px 12px;
   }
-  
+
   .filter-select {
     font-size: 13px;
     padding: 8px 12px;
   }
-  
+
   .clear-btn {
     font-size: 13px;
     padding: 10px 12px;
@@ -425,17 +517,17 @@
   .search-section {
     padding: 0 5px;
   }
-  
+
   #searchInput {
     font-size: 12px;
     padding: 6px 10px;
   }
-  
+
   .filter-select {
     font-size: 12px;
     padding: 6px 10px;
   }
-  
+
   .clear-btn {
     font-size: 12px;
     padding: 8px 10px;
@@ -689,17 +781,25 @@ body {
   text-align: center;
 }
 
+#buttons-container {
+  margin-top: 30px;
+}
+
 #events-button,
 #routines-button,
 #notice-button,
 #routine-button {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(250, 21, 136, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.2),
+    rgba(250, 21, 136, 0.2)
+  );
   border: 2px solid rgba(0, 212, 255, 0.5);
   color: #fff;
   padding: 12px 24px;
   border-radius: 25px;
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -711,7 +811,11 @@ body {
 #routines-button:hover,
 #notice-button:hover,
 #routine-button:hover {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(250, 21, 136, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.3),
+    rgba(250, 21, 136, 0.3)
+  );
   border-color: rgba(0, 212, 255, 0.8);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
@@ -730,13 +834,17 @@ body {
 }
 
 #student-button {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(108, 92, 231, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.2),
+    rgba(108, 92, 231, 0.2)
+  );
   border: 2px solid rgba(0, 212, 255, 0.5);
   color: #fff;
   padding: 12px 24px;
   border-radius: 25px;
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -745,7 +853,11 @@ body {
 }
 
 #student-button:hover {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(108, 92, 231, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.3),
+    rgba(108, 92, 231, 0.3)
+  );
   border-color: rgba(0, 212, 255, 0.8);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
@@ -775,9 +887,10 @@ body {
   font-size: 14px;
 }
 
-.student-auth-form input, .student-auth-form textarea {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(0,212,255,0.4);
+.student-auth-form input,
+.student-auth-form textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.4);
   color: #fff;
   padding: 10px 12px;
   border-radius: 8px;
@@ -786,8 +899,8 @@ body {
 }
 
 .student-auth-form select {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(0,212,255,0.4);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.4);
   color: #fff;
   padding: 10px 12px;
   border-radius: 8px;
@@ -806,19 +919,27 @@ body {
 }
 
 .student-auth-btn {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(250, 21, 136, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.2),
+    rgba(250, 21, 136, 0.2)
+  );
   border: 2px solid rgba(0, 212, 255, 0.5);
   color: #fff;
   padding: 10px 16px;
   border-radius: 10px;
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .student-auth-btn:hover {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(250, 21, 136, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.3),
+    rgba(250, 21, 136, 0.3)
+  );
   border-color: rgba(0, 212, 255, 0.8);
 }
 
@@ -1310,7 +1431,7 @@ body {
   border: 1px solid rgba(0, 212, 255, 0.3);
   border-radius: 8px;
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 14px;
   text-align: left;
   transition: all 0.3s ease;
@@ -1343,6 +1464,15 @@ body {
   position: relative;
 }
 
+.resources-section-full {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(25, 15, 50, 0.9);
+  padding: 20px;
+  overflow-y: auto;
+}
+
 .resources-tabs {
   display: flex;
   background: rgba(40, 30, 90, 0.95);
@@ -1359,7 +1489,7 @@ body {
   border: none;
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 14px;
   font-weight: 600;
   transition: all 0.3s ease;
@@ -1392,7 +1522,7 @@ body {
   border: 1px solid rgba(0, 212, 255, 0.3);
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 12px;
   font-weight: 600;
   border-radius: 15px;
@@ -1498,7 +1628,7 @@ body {
 }
 
 .resource-section-header::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 20px;
   top: 50%;
@@ -1526,7 +1656,7 @@ body {
   align-items: center;
   gap: 12px;
   color: #fff;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-weight: 600;
 }
 
@@ -1606,8 +1736,12 @@ body {
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Focus states for accessibility */
@@ -1649,65 +1783,65 @@ body {
     max-height: 95vh;
     width: 98vw;
   }
-  
+
   .routines-content {
     flex-direction: column;
   }
-  
+
   .courses-section {
     width: 100%;
     border-right: none;
     border-bottom: 1px solid rgba(0, 212, 255, 0.3);
     max-height: 220px;
   }
-  
+
   .resources-section {
     flex: 1;
     min-height: 360px;
   }
-  
+
   .resources-tabs {
     flex-wrap: wrap;
   }
-  
+
   .resource-tab {
     flex: 1;
     min-width: 120px;
     padding: 12px 15px;
     font-size: 13px;
   }
-  
+
   .section-filters {
     padding: 8px 15px;
   }
-  
+
   .section-filter {
     padding: 5px 10px;
     font-size: 11px;
   }
-  
+
   /* Mobile responsive styles for expandable sections */
   .resource-section-header {
     padding: 12px 15px;
   }
-  
+
   .resource-section-title {
     gap: 8px;
   }
-  
+
   .expand-icon {
     font-size: 14px;
     min-width: 16px;
   }
-  
+
   .resource-type-label {
     font-size: 14px;
   }
-  
+
   .resource-count {
     font-size: 12px;
   }
-  
+
   .resource-section-content {
     padding: 15px;
   }
@@ -1761,7 +1895,7 @@ body {
   border: 1px solid rgba(0, 212, 255, 0.3);
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 13px;
   font-weight: 600;
   border-radius: 20px;
@@ -1936,21 +2070,21 @@ body {
     max-width: 95vw;
     max-height: 90vh;
   }
-  
+
   .notice-filters {
     padding: 10px 15px;
   }
-  
+
   .notice-filter {
     padding: 6px 12px;
     font-size: 12px;
   }
-  
+
   .notice-header {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .notice-meta {
     margin-left: 0;
     align-self: flex-start;
@@ -2019,7 +2153,7 @@ body {
   border: 1px solid rgba(0, 212, 255, 0.3);
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 13px;
   font-weight: 600;
   border-radius: 15px;
@@ -2045,7 +2179,7 @@ body {
   border: 1px solid rgba(0, 212, 255, 0.3);
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   font-size: 14px;
   font-weight: 600;
   border-radius: 20px;
@@ -2070,7 +2204,7 @@ body {
   overflow-y: auto;
   overflow-x: auto;
   padding: 20px;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
 }
 
 /* Custom scrollbar styling */
@@ -2085,13 +2219,21 @@ body {
 }
 
 .routine-display::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.6), rgba(250, 21, 136, 0.6));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.6),
+    rgba(250, 21, 136, 0.6)
+  );
   border-radius: 4px;
   border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
 .routine-display::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.8), rgba(250, 21, 136, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.8),
+    rgba(250, 21, 136, 0.8)
+  );
 }
 
 .routine-display::-webkit-scrollbar-corner {
@@ -2108,7 +2250,7 @@ body {
   margin-bottom: 30px;
   overflow-x: auto;
   width: 100%;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
 }
 
 .routine-table::-webkit-scrollbar {
@@ -2121,13 +2263,21 @@ body {
 }
 
 .routine-table::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.6), rgba(250, 21, 136, 0.6));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.6),
+    rgba(250, 21, 136, 0.6)
+  );
   border-radius: 4px;
   border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
 .routine-table::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.8), rgba(250, 21, 136, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.8),
+    rgba(250, 21, 136, 0.8)
+  );
 }
 
 .routine-table {
@@ -2152,7 +2302,7 @@ body {
   text-align: center;
   font-weight: 600;
   font-size: 13px;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   border-bottom: 1px solid rgba(0, 212, 255, 0.3);
   position: sticky;
   top: 0;
@@ -2165,7 +2315,7 @@ body {
   border-bottom: 1px solid rgba(0, 212, 255, 0.1);
   color: rgba(255, 255, 255, 0.9);
   font-size: 12px;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   vertical-align: middle;
   min-width: 120px;
 }
@@ -2179,7 +2329,7 @@ body {
   color: #fa1588;
   font-weight: 600;
   font-size: 12px;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   min-width: 80px;
   position: sticky;
   left: 0;
@@ -2192,7 +2342,7 @@ body {
   margin: 2px;
   padding: 8px 6px;
   font-size: 11px;
-  font-family: 'Source Code Pro', monospace;
+  font-family: "Source Code Pro", monospace;
   line-height: 1.3;
   min-height: 50px;
   display: flex;
@@ -2298,44 +2448,44 @@ body {
     max-height: 95vh;
     width: 98vw;
   }
-  
+
   .routine-filters {
     padding: 10px 12px;
     gap: 8px;
   }
-  
+
   .routine-filter {
     padding: 8px 12px;
     font-size: 12px;
     min-width: 56px;
   }
-  
+
   .day-filters {
     padding: 8px 12px;
     gap: 8px;
   }
-  
+
   .day-filter {
     padding: 6px 10px;
     font-size: 12px;
     min-width: 56px;
   }
-  
+
   .routine-display {
     padding: 12px;
     overflow-x: auto;
   }
-  
+
   .routine-table {
     overflow-x: auto;
     margin-bottom: 16px;
   }
-  
+
   .routine-table table {
     min-width: 720px;
     font-size: 10px;
   }
-  
+
   .routine-table th,
   .routine-table td {
     padding: 6px 4px;
@@ -2343,19 +2493,19 @@ body {
     white-space: nowrap;
     min-width: 100px;
   }
-  
+
   .routine-table .course-cell {
     font-size: 9px;
     padding: 4px 4px;
     min-height: 40px;
   }
-  
+
   .extra-class-item {
     flex-direction: column;
     gap: 10px;
     align-items: stretch;
   }
-  
+
   .extra-class-actions {
     justify-content: center;
   }
@@ -2412,7 +2562,9 @@ body {
 }
 
 @keyframes resources-dots {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0.6);
     opacity: 0.5;
   }
@@ -2434,4 +2586,290 @@ body {
   color: #ffffff;
   font-size: 14px;
   letter-spacing: 0.2px;
+}
+
+/* ===== Google Drive File Manager Styles ===== */
+
+.drive-file-manager {
+  background: rgba(20, 15, 45, 0.6);
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 500px;
+}
+
+.drive-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 15px;
+  background: rgba(40, 30, 90, 0.5);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.breadcrumb-item {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.breadcrumb-item:hover {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+}
+
+.breadcrumb-item.active {
+  color: #00d4ff;
+  cursor: default;
+}
+
+.breadcrumb-separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.drive-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.drive-btn {
+  padding: 10px 18px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  color: #00d4ff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Source Code Pro", monospace;
+}
+
+.drive-btn:hover:not(:disabled) {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.drive-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.drive-search-box {
+  flex: 1;
+  min-width: 200px;
+}
+
+.drive-search-box input {
+  width: 100%;
+  padding: 10px 15px;
+  background: rgba(40, 30, 90, 0.5);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: "Source Code Pro", monospace;
+  transition: all 0.3s ease;
+}
+
+.drive-search-box input:focus {
+  outline: none;
+  border-color: rgba(0, 212, 255, 0.6);
+  background: rgba(40, 30, 90, 0.7);
+}
+
+.drive-search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.drive-files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drive-file-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(40, 30, 90, 0.5);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.drive-file-item:hover {
+  background: rgba(40, 30, 90, 0.7);
+  border-color: rgba(0, 212, 255, 0.4);
+  transform: translateX(5px);
+}
+
+.drive-file-item.folder {
+  border-left: 3px solid rgba(0, 212, 255, 0.5);
+}
+
+.drive-file-item.file {
+  border-left: 3px solid rgba(250, 21, 136, 0.5);
+}
+
+.file-icon {
+  font-size: 32px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.file-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.drive-action-btn {
+  padding: 8px 15px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 6px;
+  color: #00d4ff;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Source Code Pro", monospace;
+  white-space: nowrap;
+}
+
+.drive-action-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.drive-loading,
+.drive-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+.drive-error {
+  padding: 40px 30px;
+  background: rgba(40, 30, 90, 0.5);
+  border: 1px solid rgba(250, 21, 136, 0.3);
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.drive-error h3 {
+  color: #fa1588;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.drive-error p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.drive-error ol {
+  margin: 15px 0 15px 20px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.drive-error ol li {
+  margin-bottom: 8px;
+}
+
+.drive-direct-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 8px;
+  color: #00d4ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.drive-direct-link:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Responsive styles for file manager */
+@media (max-width: 768px) {
+  .drive-file-manager {
+    padding: 15px;
+  }
+
+  .drive-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .drive-btn {
+    width: 100%;
+  }
+
+  .drive-search-box {
+    width: 100%;
+  }
+
+  .drive-file-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .file-icon {
+    font-size: 28px;
+  }
+
+  .file-actions {
+    width: 100%;
+  }
+
+  .drive-action-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .file-meta {
+    flex-direction: column;
+    gap: 5px;
+  }
 }

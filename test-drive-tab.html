@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Drive Tab</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <h1 style="color: white; text-align: center; padding: 20px">
+      Drive Tab Test
+    </h1>
+
+    <div style="max-width: 800px; margin: 50px auto">
+      <div class="resources-tabs">
+        <button class="resource-tab active" data-resource="drive-files">
+          📁 Drive Files
+        </button>
+        <button class="resource-tab" data-resource="books">📚 Books</button>
+        <button class="resource-tab" data-resource="slides">
+          📊 Lecture Slides
+        </button>
+      </div>
+
+      <div
+        style="background: rgba(20, 15, 45, 0.8); padding: 20px; color: white"
+      >
+        <p>
+          If you can see the "📁 Drive Files" tab above, the HTML and CSS are
+          working correctly.
+        </p>
+        <p>
+          The tab should have a cyan highlight since it has the "active" class.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      console.log("Checking for Drive Files tab...");
+      const driveTab = document.querySelector('[data-resource="drive-files"]');
+      console.log("Drive Files tab found:", driveTab);
+      console.log("Tab text:", driveTab ? driveTab.textContent : "NOT FOUND");
+    </script>
+  </body>
+</html>
