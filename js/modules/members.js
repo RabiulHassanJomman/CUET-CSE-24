@@ -3,6 +3,7 @@
 
 import { membersArray, studentsList } from "./members-data.js";
 import { preventMainPageScroll, restoreMainPageScroll } from "./utils.js";
+import { getDb } from "./firebase-helper.js";
 
 // Facebook URL normalization
 export function normalizeFacebookUrl(rawUrl) {
@@ -15,8 +16,31 @@ export function normalizeFacebookUrl(rawUrl) {
   return url;
 }
 
+// Fetch member data from Firebase
+export async function fetchMemberDataFromFirebase() {
+  try {
+    const db = await getDb();
+    const membersRef = db.collection("members");
+    const snapshot = await membersRef.get();
+    
+    const firebaseMembers = {};
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      firebaseMembers[doc.id] = {
+        nickname: data.nickname || null,
+        blood_group: data.blood_group || data.bloodGroup || null,
+      };
+    });
+    
+    return firebaseMembers;
+  } catch (error) {
+    console.error("Error fetching member data from Firebase:", error);
+    return {};
+  }
+}
+
 // Ensure all members from students list are included
-export function ensureAllMembersFromStudents() {
+export async function ensureAllMembersFromStudents(firebaseData = {}) {
   const allMembers = [];
   const idToMember = new Map(membersArray.map((m) => [String(m.id), m]));
 
@@ -24,10 +48,15 @@ export function ensureAllMembersFromStudents() {
   for (let i = 2404001; i <= 2404132; i++) {
     const id = i.toString();
     const existingMember = idToMember.get(id);
+    const firebaseMember = firebaseData[id] || {};
 
     if (existingMember) {
-      // Use existing member data
-      allMembers.push(existingMember);
+      // Merge existing member data with Firebase data
+      allMembers.push({
+        ...existingMember,
+        nickname: firebaseMember.nickname || existingMember.nickname,
+        blood_group: firebaseMember.blood_group || existingMember.blood_group,
+      });
     } else {
       // Find from studentsList
       const studentData = studentsList.find((s) => String(s.student_id) === id);
@@ -40,8 +69,8 @@ export function ensureAllMembersFromStudents() {
         college: null,
         school: null,
         bio: null,
-        nickname: null,
-        bloodGroup: null,
+        nickname: firebaseMember.nickname || null,
+        blood_group: firebaseMember.blood_group || null,
         fb_profile_link: null,
       });
     }
@@ -129,7 +158,7 @@ export function closeMemberModal() {
 }
 
 // Search functionality
-export function setupMemberSearch() {
+export async function setupMemberSearch(firebaseData = {}) {
   const searchInput = document.getElementById("searchInput");
   const clearBtn = document.getElementById("clearSearchBtn");
   const searchStats = document.getElementById("searchStats");
@@ -137,7 +166,7 @@ export function setupMemberSearch() {
   if (!searchInput) return;
 
   // Search function
-  const performSearch = () => {
+  const performSearch = async () => {
     const searchTerm = searchInput.value.trim().toLowerCase();
 
     if (!searchTerm) {
@@ -153,7 +182,7 @@ export function setupMemberSearch() {
     if (clearBtn) clearBtn.style.display = "inline-block";
 
     // Get all members
-    const allMembers = ensureAllMembersFromStudents();
+    const allMembers = await ensureAllMembersFromStudents(firebaseData);
 
     // Search in members
     const results = allMembers.filter((member) => {

@@ -14,6 +14,7 @@ import {
   createMemberCard,
   displaySearchResults,
   ensureAllMembersFromStudents,
+  fetchMemberDataFromFirebase,
   showMemberModal,
 } from "./modules/members.js";
 import {
@@ -29,14 +30,14 @@ import {
 import { initializeUtils } from "./modules/utils.js";
 
 // Initialize the application
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   console.log("🚀 CUET CSE 24 - Application Starting...");
 
   // Initialize utilities
   initializeUtils();
 
   // Initialize member data
-  initializeMembers();
+  await initializeMembers();
 
   // Set up button event listeners
   setupButtonListeners();
@@ -45,9 +46,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Initialize member data and display
-function initializeMembers() {
-  // Ensure all members from students list are included
-  const allMembers = ensureAllMembersFromStudents();
+async function initializeMembers() {
+  // Fetch member data from Firebase
+  console.log("📡 Fetching member data from Firebase...");
+  const firebaseData = await fetchMemberDataFromFirebase();
+  
+  // Ensure all members from students list are included with Firebase data
+  const allMembers = await ensureAllMembersFromStudents(firebaseData);
 
   // Create and display member cards
   const membersContainer = document.getElementById("members-container");
