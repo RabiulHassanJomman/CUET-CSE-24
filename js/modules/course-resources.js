@@ -1,10 +1,12 @@
 // ===== Course Resources Module =====
 
-import { db } from "../firebase-config.js";
 import {
   initDriveFileManager,
   resetDriveFileManager,
 } from "./drive-file-manager.js";
+
+// Get Firestore instance from window (initialized by Firebase SDK)
+const getDb = () => window.db;
 
 // Course resources data
 export let coursesArray = [];
@@ -16,6 +18,7 @@ export let expandedSections = new Set(["books"]); // Track which sections are ex
 // Load courses from Firebase
 export async function loadCoursesFromFirebase() {
   try {
+    const db = getDb();
     const snapshot = await db
       .collection("courses")
       .orderBy("createdAt", "asc")
