@@ -1,14 +1,12 @@
 // ===== Events Module =====
 
+import { getDb } from "./firebase-helper.js";
 import {
   getActiveModal,
   preventMainPageScroll,
   restoreMainPageScroll,
   setActiveModal,
 } from "./utils.js";
-
-// Get Firestore instance from window (initialized by Firebase SDK)
-const getDb = () => window.db;
 
 // Events data
 export let eventsArray = [];
@@ -19,7 +17,12 @@ export async function loadEventsFromFirebase() {
     // Delete expired events first
     await deleteExpiredItems();
 
-    const db = getDb();
+    const db = await getDb();
+    if (!db) {
+      console.error("Firestore not available");
+      eventsArray = [];
+      return;
+    }
     const snapshot = await db.collection("events").orderBy("date", "asc").get();
     eventsArray = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (err) {
@@ -120,7 +123,8 @@ async function deleteExpiredItems() {
   today.setHours(0, 0, 0, 0);
 
   try {
-    const db = getDb();
+    const db = await getDb();
+    if (!db) return;
     const eventsSnapshot = await db.collection("events").get();
     const expiredEvents = eventsSnapshot.docs.filter((doc) => {
       const eventData = doc.data();

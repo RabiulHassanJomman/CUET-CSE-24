@@ -4,15 +4,13 @@ import {
   initDriveFileManager,
   resetDriveFileManager,
 } from "./drive-file-manager.js";
+import { getDb } from "./firebase-helper.js";
 import {
   getActiveModal,
   preventMainPageScroll,
   restoreMainPageScroll,
   setActiveModal,
 } from "./utils.js";
-
-// Get Firestore instance from window (initialized by Firebase SDK)
-const getDb = () => window.db;
 
 // Course resources data
 export let coursesArray = [];
@@ -24,7 +22,12 @@ export let expandedSections = new Set(["books"]); // Track which sections are ex
 // Load courses from Firebase
 export async function loadCoursesFromFirebase() {
   try {
-    const db = getDb();
+    const db = await getDb();
+    if (!db) {
+      console.error("Firestore not available");
+      coursesArray = [];
+      return;
+    }
     const snapshot = await db
       .collection("courses")
       .orderBy("createdAt", "asc")

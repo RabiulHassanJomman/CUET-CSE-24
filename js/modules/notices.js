@@ -1,14 +1,12 @@
 // ===== Notices Module =====
 
+import { getDb } from "./firebase-helper.js";
 import {
   getActiveModal,
   preventMainPageScroll,
   restoreMainPageScroll,
   setActiveModal,
 } from "./utils.js";
-
-// Get Firestore instance from window (initialized by Firebase SDK)
-const getDb = () => window.db;
 
 // Notices data
 export let noticesArray = [];

@@ -1,14 +1,12 @@
 // ===== Routine Module =====
 
+import { getDb } from "./firebase-helper.js";
 import {
   getActiveModal,
   preventMainPageScroll,
   restoreMainPageScroll,
   setActiveModal,
 } from "./utils.js";
-
-// Get Firestore instance from window (initialized by Firebase SDK)
-const getDb = () => window.db;
 
 // Routine data
 export let extraClassesArray = [];
@@ -57,7 +55,12 @@ export async function loadExtraClassesFromFirebase() {
     // Delete expired extra classes first
     await deleteExpiredItems();
 
-    const db = getDb();
+    const db = await getDb();
+    if (!db) {
+      console.error("Firestore not available");
+      extraClassesArray = [];
+      return;
+    }
     const snapshot = await db
       .collection("extraClasses")
       .orderBy("createdAt", "desc")
@@ -296,7 +299,8 @@ async function deleteExpiredItems() {
   today.setHours(0, 0, 0, 0);
 
   try {
-    const db = getDb();
+    const db = await getDb();
+    if (!db) return;
     const extraClassesSnapshot = await db.collection("extraClasses").get();
     const expiredExtraClasses = extraClassesSnapshot.docs.filter((doc) => {
       const extraClassData = doc.data();
