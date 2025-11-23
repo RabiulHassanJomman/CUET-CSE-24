@@ -33,11 +33,8 @@ export async function getDb() {
           window.firebase.initializeApp(window.__firebaseConfig);
         }
         window.db = window.firebase.firestore();
-        try {
-          window.db.enablePersistence({ synchronizeTabs: true });
-        } catch (_) {
-          // Persistence may fail in some browsers
-        }
+        // Note: Persistence is enabled by default in modern Firebase versions
+        // The enablePersistence() method is deprecated
       } catch (e) {
         console.error("Failed to initialize Firebase:", e);
       }
