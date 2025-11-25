@@ -1,7 +1,7 @@
 // ===== Student Authentication Module =====
 // Handles Google OAuth login for CUET students and profile management
 
-import { getDb, getAuth } from "./firebase-helper.js";
+import { getAuth, getDb } from "./firebase-helper.js";
 
 let currentUser = null;
 
@@ -97,9 +97,32 @@ export async function signOut() {
     await auth.signOut();
     currentUser = null;
     showGoogleSignInView();
+    updateStudentButton(null); // Reset button to "Student Login"
   } catch (error) {
     console.error("Sign-out error:", error);
     throw error;
+  }
+}
+
+// Update the student button based on auth state
+function updateStudentButton(user) {
+  const studentBtn = document.getElementById("student-button");
+  if (!studentBtn) return;
+
+  if (user) {
+    // User is logged in - show "Your Profile"
+    studentBtn.innerHTML = "👤 Your Profile";
+    studentBtn.onclick = () => openProfileEditor();
+  } else {
+    // User is logged out - show "Student Login"
+    studentBtn.innerHTML = "👨‍🎓 Student Login";
+    studentBtn.onclick = () => {
+      const studentAuthModal = document.getElementById("studentAuthModalOverlay");
+      if (studentAuthModal) {
+        studentAuthModal.style.display = "flex";
+        setTimeout(() => studentAuthModal.classList.add("show"), 10);
+      }
+    };
   }
 }
 
@@ -121,6 +144,9 @@ function showWelcomeView(displayName) {
   if (googleView) googleView.style.display = "none";
   if (loggedinView) loggedinView.style.display = "block";
   if (welcomeText) welcomeText.textContent = `Welcome, ${displayName}!`;
+  
+  // Update the student button to "Your Profile"
+  updateStudentButton(currentUser);
 }
 
 // Show profile modal
@@ -253,9 +279,11 @@ export async function initializeAuth() {
       if (user && isValidCUETEmail(user.email)) {
         currentUser = user;
         showWelcomeView(user.displayName || user.email);
+        updateStudentButton(user); // Update button to "Your Profile"
       } else {
         currentUser = null;
         showGoogleSignInView();
+        updateStudentButton(null); // Update button to "Student Login"
       }
     });
   } catch (error) {

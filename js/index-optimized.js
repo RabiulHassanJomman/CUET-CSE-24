@@ -126,19 +126,8 @@ function setupButtonListeners() {
     noticeBtn.addEventListener("click", openNoticeModal);
   }
 
-  // Student login button
-  const studentBtn = document.getElementById("student-button");
-  if (studentBtn) {
-    studentBtn.addEventListener("click", () => {
-      const studentAuthModal = document.getElementById(
-        "studentAuthModalOverlay"
-      );
-      if (studentAuthModal) {
-        studentAuthModal.style.display = "flex";
-        setTimeout(() => studentAuthModal.classList.add("show"), 10);
-      }
-    });
-  }
+  // Note: Student button click handler is now managed by student-auth.js
+  // based on authentication state (shows "Student Login" or "Your Profile")
 
   // Student auth modal close button
   const studentAuthClose = document.getElementById("studentAuthModalClose");
