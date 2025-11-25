@@ -195,6 +195,7 @@ async function loadProfileData(uid, studentId, isFirstTime = false) {
       form.querySelector("#profileCollege").value = data.college || "";
       form.querySelector("#profileSchool").value = data.school || "";
       form.querySelector("#profileBio").value = data.bio || "";
+      form.querySelector("#profileFacebook").value = data.facebookLink || "";
     }
 
     if (isFirstTime) {
@@ -225,6 +226,7 @@ export async function saveProfile() {
       college: form.querySelector("#profileCollege").value.trim(),
       school: form.querySelector("#profileSchool").value.trim(),
       bio: form.querySelector("#profileBio").value.trim(),
+      facebookLink: form.querySelector("#profileFacebook").value.trim(),
       updatedAt: new Date().toISOString(),
     };
 

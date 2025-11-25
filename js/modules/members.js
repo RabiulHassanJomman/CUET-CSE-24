@@ -38,6 +38,7 @@ export async function fetchMemberDataFromFirebase() {
           school: data.school || null,
           email: data.email || null,
           uid: data.uid || doc.id,
+          fb_profile_link: data.facebookLink || null,
         };
       }
     });
@@ -75,6 +76,8 @@ export async function ensureAllMembersFromStudents(firebaseData = {}) {
         school: firebaseMember.school || existingMember.school,
         email: firebaseMember.email || null,
         uid: firebaseMember.uid || null,
+        fb_profile_link:
+          firebaseMember.fb_profile_link || existingMember.fb_profile_link,
       });
     } else {
       // Find from studentsList
@@ -92,7 +95,7 @@ export async function ensureAllMembersFromStudents(firebaseData = {}) {
         blood_group: firebaseMember.blood_group || null,
         email: firebaseMember.email || null,
         uid: firebaseMember.uid || null,
-        fb_profile_link: null,
+        fb_profile_link: firebaseMember.fb_profile_link || null,
       });
     }
   }
