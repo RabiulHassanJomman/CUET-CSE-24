@@ -117,7 +117,9 @@ function updateStudentButton(user) {
     // User is logged out - show "Student Login"
     studentBtn.innerHTML = "👨‍🎓 Student Login";
     studentBtn.onclick = () => {
-      const studentAuthModal = document.getElementById("studentAuthModalOverlay");
+      const studentAuthModal = document.getElementById(
+        "studentAuthModalOverlay"
+      );
       if (studentAuthModal) {
         studentAuthModal.style.display = "flex";
         setTimeout(() => studentAuthModal.classList.add("show"), 10);
@@ -144,7 +146,7 @@ function showWelcomeView(displayName) {
   if (googleView) googleView.style.display = "none";
   if (loggedinView) loggedinView.style.display = "block";
   if (welcomeText) welcomeText.textContent = `Welcome, ${displayName}!`;
-  
+
   // Update the student button to "Your Profile"
   updateStudentButton(currentUser);
 }

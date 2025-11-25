@@ -149,7 +149,7 @@ export function showMemberModal(member) {
     modalSchool.textContent = `School: ${member.school || "Not specified"}`;
   if (modalBlood)
     modalBlood.textContent = `Blood Group: ${
-      member.bloodGroup || "Not specified"
+      member.blood_group || "Not specified"
     }`;
   if (modalBio) modalBio.textContent = member.bio || "No bio available";
 
