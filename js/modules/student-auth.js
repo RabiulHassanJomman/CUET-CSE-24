@@ -1,17 +1,9 @@
 // ===== Student Authentication Module =====
 // Handles Google OAuth login for CUET students and profile management
 
-import { getDb } from "./firebase-helper.js";
+import { getDb, getAuth } from "./firebase-helper.js";
 
 let currentUser = null;
-
-// Initialize Firebase Auth
-async function getAuth() {
-  if (!window.firebase || !window.firebase.auth) {
-    throw new Error("Firebase Auth not loaded");
-  }
-  return window.firebase.auth();
-}
 
 // Check if email is a valid CUET student email
 function isValidCUETEmail(email) {
