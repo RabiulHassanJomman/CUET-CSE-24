@@ -14,6 +14,7 @@ import {
   closeMemberModal,
   createMemberCard,
   ensureAllMembersFromStudents,
+  fetchMemberDataFromFirebase,
   setupMemberSearch,
   showMemberModal,
 } from "./modules/members.js";
@@ -62,20 +63,33 @@ function initTextRevealAnimation() {
 }
 
 // Initialize member data and display
-function initializeMembers() {
-  // Ensure all members from students list are included
-  const allMembers = ensureAllMembersFromStudents();
+async function initializeMembers() {
+  // Fetch member data from Firebase
+  console.log("📡 Fetching member data from Firebase...");
+  const firebaseData = await fetchMemberDataFromFirebase();
+
+  // Ensure all members from students list are included with Firebase data
+  const allMembers = await ensureAllMembersFromStudents(firebaseData);
+  
+  console.log("Debug - allMembers type:", typeof allMembers);
+  console.log("Debug - allMembers is array:", Array.isArray(allMembers));
+  console.log("Debug - allMembers:", allMembers);
 
   // Create and display member cards
   const membersContainer = document.getElementById("members");
-  if (membersContainer) {
+  if (membersContainer && Array.isArray(allMembers)) {
     allMembers.forEach((member) => {
       const card = createMemberCard(member);
       membersContainer.appendChild(card);
     });
 
     console.log(`📋 Loaded ${allMembers.length} member cards`);
+  } else {
+    console.error("❌ allMembers is not an array or members container not found");
   }
+
+  // Set up member search with Firebase data
+  setupMemberSearch(firebaseData);
 }
 
 // Set up button event listeners
@@ -124,7 +138,7 @@ function setupButtonListeners() {
 }
 
 // Initialize the application
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   console.log("🚀 CUET CSE 24 - Application Starting...");
 
   // Initialize utilities
@@ -133,11 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize text reveal animation
   initTextRevealAnimation();
 
-  // Initialize member data
-  initializeMembers();
-
-  // Set up member search
-  setupMemberSearch();
+  // Initialize member data (includes search setup)
+  await initializeMembers();
 
   // Set up button event listeners
   setupButtonListeners();

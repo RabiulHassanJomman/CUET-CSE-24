@@ -1,9 +1,9 @@
 // ===== Members Module =====
 // Handles member data management, card creation, and display logic
 
+import { getDb } from "./firebase-helper.js";
 import { membersArray, studentsList } from "./members-data.js";
 import { preventMainPageScroll, restoreMainPageScroll } from "./utils.js";
-import { getDb } from "./firebase-helper.js";
 
 // Facebook URL normalization
 export function normalizeFacebookUrl(rawUrl) {
@@ -20,18 +20,31 @@ export function normalizeFacebookUrl(rawUrl) {
 export async function fetchMemberDataFromFirebase() {
   try {
     const db = await getDb();
-    const membersRef = db.collection("members");
-    const snapshot = await membersRef.get();
-    
+    const profilesRef = db.collection("profiles");
+    const snapshot = await profilesRef.get();
+
     const firebaseMembers = {};
     snapshot.forEach((doc) => {
       const data = doc.data();
-      firebaseMembers[doc.id] = {
-        nickname: data.nickname || null,
-        blood_group: data.blood_group || data.bloodGroup || null,
-      };
+      const studentId = data.studentId;
+
+      if (studentId) {
+        firebaseMembers[studentId] = {
+          nickname: data.nickname || null,
+          blood_group: data.bloodGroup || null,
+          bio: data.bio || null,
+          home: data.home || null,
+          college: data.college || null,
+          school: data.school || null,
+          email: data.email || null,
+          uid: data.uid || doc.id,
+        };
+      }
     });
-    
+
+    console.log(
+      `📊 Fetched ${Object.keys(firebaseMembers).length} profiles from Firebase`
+    );
     return firebaseMembers;
   } catch (error) {
     console.error("Error fetching member data from Firebase:", error);
@@ -51,26 +64,34 @@ export async function ensureAllMembersFromStudents(firebaseData = {}) {
     const firebaseMember = firebaseData[id] || {};
 
     if (existingMember) {
-      // Merge existing member data with Firebase data
+      // Merge existing member data with Firebase data (Firebase takes priority)
       allMembers.push({
         ...existingMember,
         nickname: firebaseMember.nickname || existingMember.nickname,
         blood_group: firebaseMember.blood_group || existingMember.blood_group,
+        bio: firebaseMember.bio || existingMember.bio,
+        home: firebaseMember.home || existingMember.home,
+        college: firebaseMember.college || existingMember.college,
+        school: firebaseMember.school || existingMember.school,
+        email: firebaseMember.email || null,
+        uid: firebaseMember.uid || null,
       });
     } else {
       // Find from studentsList
       const studentData = studentsList.find((s) => String(s.student_id) === id);
 
-      // Create member with available data
+      // Create member with available data, prioritizing Firebase
       allMembers.push({
         name: studentData ? studentData.full_name : null,
         id: id,
-        home: null,
-        college: null,
-        school: null,
-        bio: null,
+        home: firebaseMember.home || null,
+        college: firebaseMember.college || null,
+        school: firebaseMember.school || null,
+        bio: firebaseMember.bio || null,
         nickname: firebaseMember.nickname || null,
         blood_group: firebaseMember.blood_group || null,
+        email: firebaseMember.email || null,
+        uid: firebaseMember.uid || null,
         fb_profile_link: null,
       });
     }
@@ -85,15 +106,20 @@ export function createMemberCard(member) {
   card.className = "member-card";
   card.setAttribute("data-id", member.id);
 
-  const fullName = member.nickname || member.name || "Unknown";
-  const firstName = fullName.split(" ")[0];
-  const bloodGroup = member.blood_group || "N/A";
+  const nickname = member.nickname || member.name || "Unknown";
+  const bloodGroup = member.blood_group;
 
-  card.innerHTML = `
-    <h3>${firstName}</h3>
-    <p>ID: ${member.id}</p>
-    <p>Blood: ${bloodGroup}</p>
+  let cardHTML = `
+    <h3>${nickname}</h3>
+    <p class="member-id"><span class="id-hash">#</span>${member.id}</p>
   `;
+
+  // Add blood group with emoji only if available
+  if (bloodGroup) {
+    cardHTML += `<p class="member-blood">🩸 ${bloodGroup}</p>`;
+  }
+
+  card.innerHTML = cardHTML;
 
   card.addEventListener("click", () => showMemberModal(member));
   return card;
@@ -132,7 +158,7 @@ export function showMemberModal(member) {
     if (member.fb_profile_link) {
       modalFacebook.innerHTML = `Facebook: <a href="${normalizeFacebookUrl(
         member.fb_profile_link
-      )}" target="_blank" rel="noopener noreferrer">Profile Link</a>`;
+      )}" target="_blank" rel="noopener noreferrer">${member.nickname}</a>`;
     } else {
       modalFacebook.textContent = "Facebook: No profile link";
     }

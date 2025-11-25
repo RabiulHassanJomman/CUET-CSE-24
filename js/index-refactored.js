@@ -50,7 +50,7 @@ async function initializeMembers() {
   // Fetch member data from Firebase
   console.log("📡 Fetching member data from Firebase...");
   const firebaseData = await fetchMemberDataFromFirebase();
-  
+
   // Ensure all members from students list are included with Firebase data
   const allMembers = await ensureAllMembersFromStudents(firebaseData);
 
