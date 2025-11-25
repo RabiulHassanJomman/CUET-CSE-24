@@ -28,6 +28,12 @@ import {
   closeRoutineModal,
   openRoutineModal,
 } from "./modules/routine.js";
+import {
+  initializeAuth,
+  saveProfile,
+  signInWithGoogle,
+  signOut,
+} from "./modules/student-auth.js";
 import { initializeUtils } from "./modules/utils.js";
 
 // Text reveal animation
@@ -70,7 +76,7 @@ async function initializeMembers() {
 
   // Ensure all members from students list are included with Firebase data
   const allMembers = await ensureAllMembersFromStudents(firebaseData);
-  
+
   console.log("Debug - allMembers type:", typeof allMembers);
   console.log("Debug - allMembers is array:", Array.isArray(allMembers));
   console.log("Debug - allMembers:", allMembers);
@@ -85,7 +91,9 @@ async function initializeMembers() {
 
     console.log(`📋 Loaded ${allMembers.length} member cards`);
   } else {
-    console.error("❌ allMembers is not an array or members container not found");
+    console.error(
+      "❌ allMembers is not an array or members container not found"
+    );
   }
 
   // Set up member search with Firebase data
@@ -118,6 +126,162 @@ function setupButtonListeners() {
     noticeBtn.addEventListener("click", openNoticeModal);
   }
 
+  // Student login button
+  const studentBtn = document.getElementById("student-button");
+  if (studentBtn) {
+    studentBtn.addEventListener("click", () => {
+      const studentAuthModal = document.getElementById(
+        "studentAuthModalOverlay"
+      );
+      if (studentAuthModal) {
+        studentAuthModal.style.display = "flex";
+        setTimeout(() => studentAuthModal.classList.add("show"), 10);
+      }
+    });
+  }
+
+  // Student auth modal close button
+  const studentAuthClose = document.getElementById("studentAuthModalClose");
+  if (studentAuthClose) {
+    studentAuthClose.addEventListener("click", () => {
+      const studentAuthModal = document.getElementById(
+        "studentAuthModalOverlay"
+      );
+      if (studentAuthModal) {
+        studentAuthModal.classList.remove("show");
+        setTimeout(() => {
+          studentAuthModal.style.display = "none";
+        }, 300);
+      }
+    });
+  }
+
+  // Close student auth modal when clicking outside
+  const studentAuthModal = document.getElementById("studentAuthModalOverlay");
+  if (studentAuthModal) {
+    studentAuthModal.addEventListener("click", (e) => {
+      if (e.target === studentAuthModal) {
+        studentAuthModal.classList.remove("show");
+        setTimeout(() => {
+          studentAuthModal.style.display = "none";
+        }, 300);
+      }
+    });
+  }
+
+  // Google Sign-In button
+  const googleSignInBtn = document.getElementById("studentAuthGoogleBtn");
+  if (googleSignInBtn) {
+    googleSignInBtn.addEventListener("click", async () => {
+      try {
+        googleSignInBtn.disabled = true;
+        googleSignInBtn.textContent = "Signing in...";
+        await signInWithGoogle();
+      } catch (error) {
+        alert(error.message || "Sign-in failed. Please try again.");
+        googleSignInBtn.disabled = false;
+        googleSignInBtn.textContent = "Sign in with Google (CUET only)";
+      }
+    });
+  }
+
+  // Student logout button
+  const studentLogoutBtn = document.getElementById("studentAuthLogoutBtn");
+  if (studentLogoutBtn) {
+    studentLogoutBtn.addEventListener("click", async () => {
+      try {
+        await signOut();
+      } catch (error) {
+        alert("Logout failed: " + error.message);
+      }
+    });
+  }
+
+  // Profile modal close button
+  const profileModalClose = document.getElementById("profileModalClose");
+  if (profileModalClose) {
+    profileModalClose.addEventListener("click", () => {
+      const profileModal = document.getElementById("profileModalOverlay");
+      if (profileModal) {
+        profileModal.classList.remove("show");
+        setTimeout(() => {
+          profileModal.style.display = "none";
+        }, 300);
+      }
+    });
+  }
+
+  // Profile form save button
+  const profileForm = document.getElementById("profileForm");
+  if (profileForm) {
+    profileForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        const saveBtn = document.getElementById("profileSaveBtn");
+        if (saveBtn) {
+          saveBtn.disabled = true;
+          saveBtn.textContent = "Saving...";
+        }
+        await saveProfile();
+      } catch (error) {
+        alert("Error saving profile: " + error.message);
+        const saveBtn = document.getElementById("profileSaveBtn");
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save";
+        }
+      }
+    });
+  }
+
+  // Profile cancel button
+  const profileCancelBtn = document.getElementById("profileCancelBtn");
+  if (profileCancelBtn) {
+    profileCancelBtn.addEventListener("click", () => {
+      const profileModal = document.getElementById("profileModalOverlay");
+      if (profileModal) {
+        profileModal.classList.remove("show");
+        setTimeout(() => {
+          profileModal.style.display = "none";
+        }, 300);
+      }
+    });
+  }
+
+  // Profile logout button
+  const profileLogoutBtn = document.getElementById("profileLogoutBtn");
+  if (profileLogoutBtn) {
+    profileLogoutBtn.addEventListener("click", async () => {
+      if (confirm("Are you sure you want to logout?")) {
+        try {
+          await signOut();
+          const profileModal = document.getElementById("profileModalOverlay");
+          if (profileModal) {
+            profileModal.classList.remove("show");
+            setTimeout(() => {
+              profileModal.style.display = "none";
+            }, 300);
+          }
+        } catch (error) {
+          alert("Logout failed: " + error.message);
+        }
+      }
+    });
+  }
+
+  // Close profile modal when clicking outside
+  const profileModal = document.getElementById("profileModalOverlay");
+  if (profileModal) {
+    profileModal.addEventListener("click", (e) => {
+      if (e.target === profileModal) {
+        profileModal.classList.remove("show");
+        setTimeout(() => {
+          profileModal.style.display = "none";
+        }, 300);
+      }
+    });
+  }
+
   // Member modal close button
   const modalClose = document.getElementById("modalClose");
   if (modalClose) {
@@ -143,6 +307,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Initialize utilities
   initializeUtils();
+
+  // Initialize authentication
+  await initializeAuth();
 
   // Initialize text reveal animation
   initTextRevealAnimation();
