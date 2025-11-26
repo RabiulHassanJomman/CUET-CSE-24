@@ -201,7 +201,7 @@ export async function setupMemberSearch(firebaseData = {}) {
     if (!searchTerm) {
       // Show all members
       const allCards = document.querySelectorAll(".member-card");
-      allCards.forEach((card) => (card.style.display = ""));
+      allCards.forEach((card) => (card.style.display = "block"));
 
       if (clearBtn) clearBtn.style.display = "none";
       if (searchStats) searchStats.textContent = "";
@@ -241,7 +241,7 @@ export async function setupMemberSearch(firebaseData = {}) {
     allCards.forEach((card) => {
       const cardId = card.getAttribute("data-id");
       const isMatch = results.some((member) => member.id === cardId);
-      card.style.display = isMatch ? "" : "none";
+      card.style.display = isMatch ? "block" : "none";
     });
 
     // Update search stats

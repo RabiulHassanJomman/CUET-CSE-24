@@ -7,6 +7,7 @@ const API_KEY = "AIzaSyDecWKyktxeOwWL2W6b89LrZ6mIL-uUJow"; // Google Drive API k
 // State management
 let currentFolderId = DRIVE_FOLDER_ID;
 let folderHistory = [DRIVE_FOLDER_ID];
+let folderPathNames = [{ id: DRIVE_FOLDER_ID, name: "Root" }]; // Track folder names
 let allFiles = [];
 let currentFiles = [];
 
@@ -91,28 +92,28 @@ function renderBreadcrumb() {
   const breadcrumbContainer = document.querySelector(".drive-breadcrumb");
   if (!breadcrumbContainer) return;
 
-  // For now, just show Root > Current Folder
-  // You can enhance this to show full path if needed
-  let breadcrumbHTML =
-    '<span class="breadcrumb-item" data-folder-id="root">📁 Root</span>';
+  // Build breadcrumb with full path
+  let breadcrumbHTML = folderPathNames
+    .map((folder, index) => {
+      const isLast = index === folderPathNames.length - 1;
+      const activeClass = isLast ? " active" : "";
+      const folderName = folder.name || "Folder";
 
-  if (folderHistory.length > 1) {
-    breadcrumbHTML +=
-      ' <span class="breadcrumb-separator">></span> <span class="breadcrumb-item active">📁 Current Folder</span>';
-  }
+      return `<span class="breadcrumb-item${activeClass}" data-folder-index="${index}">📁 ${folderName}</span>`;
+    })
+    .join(' <span class="breadcrumb-separator">></span> ');
 
   breadcrumbContainer.innerHTML = breadcrumbHTML;
 
   // Add click listeners for navigation
-  breadcrumbContainer
-    .querySelectorAll(".breadcrumb-item[data-folder-id]")
-    .forEach((item) => {
-      item.addEventListener("click", () => {
-        if (item.dataset.folderId === "root") {
-          navigateToRoot();
-        }
-      });
+  breadcrumbContainer.querySelectorAll(".breadcrumb-item").forEach((item) => {
+    item.addEventListener("click", () => {
+      const index = parseInt(item.dataset.folderIndex);
+      if (index < folderPathNames.length - 1) {
+        navigateToFolderByIndex(index);
+      }
     });
+  });
 }
 
 // Render files list
@@ -168,7 +169,8 @@ export function renderFilesList(files) {
       folderItem.addEventListener("click", (e) => {
         if (!e.target.closest(".drive-action-btn")) {
           const folderId = folderItem.dataset.fileId;
-          openFolder(folderId);
+          const folderName = folderItem.querySelector(".file-name").textContent;
+          openFolder(folderId, folderName);
         }
       });
     });
@@ -177,17 +179,20 @@ export function renderFilesList(files) {
   filesListContainer.querySelectorAll(".open-folder-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const folderId = btn.closest(".drive-file-item").dataset.fileId;
-      openFolder(folderId);
+      const folderItem = btn.closest(".drive-file-item");
+      const folderId = folderItem.dataset.fileId;
+      const folderName = folderItem.querySelector(".file-name").textContent;
+      openFolder(folderId, folderName);
     });
   });
 }
 
 // Open folder
-export async function openFolder(folderId) {
+export async function openFolder(folderId, folderName = "Folder") {
   showLoading();
   currentFolderId = folderId;
   folderHistory.push(folderId);
+  folderPathNames.push({ id: folderId, name: folderName });
 
   const files = await fetchDriveFiles(folderId);
   allFiles = files;
@@ -201,6 +206,7 @@ export async function openFolder(folderId) {
 export function navigateBack() {
   if (folderHistory.length > 1) {
     folderHistory.pop();
+    folderPathNames.pop();
     currentFolderId = folderHistory[folderHistory.length - 1];
     loadCurrentFolder();
   }
@@ -209,7 +215,19 @@ export function navigateBack() {
 // Navigate to root
 export function navigateToRoot() {
   folderHistory = [DRIVE_FOLDER_ID];
+  folderPathNames = [{ id: DRIVE_FOLDER_ID, name: "Root" }];
   currentFolderId = DRIVE_FOLDER_ID;
+  loadCurrentFolder();
+}
+
+// Navigate to folder by breadcrumb index
+function navigateToFolderByIndex(index) {
+  if (index < 0 || index >= folderPathNames.length) return;
+
+  // Trim history to the clicked folder
+  folderHistory = folderHistory.slice(0, index + 1);
+  folderPathNames = folderPathNames.slice(0, index + 1);
+  currentFolderId = folderHistory[folderHistory.length - 1];
   loadCurrentFolder();
 }
 
