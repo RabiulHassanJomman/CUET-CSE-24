@@ -8,8 +8,8 @@ let currentUser = null;
 // Check if email is a valid CUET student email
 function isValidCUETEmail(email) {
   if (!email) return false;
-  // Match pattern: u<7-digit-number>@student.cuet.ac.bd
-  const pattern = /^u\d{7}@student\.cuet\.ac\.bd$/i;
+  // Match pattern: u24<5-digit-number>@student.cuet.ac.bd (CSE 2024 batch only)
+  const pattern = /^u24\d{5}@student\.cuet\.ac\.bd$/i;
   return pattern.test(email);
 }
 
@@ -38,7 +38,7 @@ export async function signInWithGoogle() {
     if (!isValidCUETEmail(user.email)) {
       await auth.signOut();
       throw new Error(
-        "Only CUET student emails (u<studentId>@student.cuet.ac.bd) are allowed."
+        "Only CUET CSE 2024 batch emails (u24xxxxx@student.cuet.ac.bd) are allowed."
       );
     }
 
